@@ -1,3 +1,5 @@
+// this is where we will do our mongodb conncetion
+
 const mongoose = require('mongoose');
 const config = require('config');
 const db = config.get('mongoURI');
@@ -15,3 +17,6 @@ const connectDB = async () => {
 }
 
 module.exports = connectDB;
+
+
+// THIS IS A TEST ! THIS IS A YO! THIS A TEST B !
