@@ -17,6 +17,3 @@ const connectDB = async () => {
 }
 
 module.exports = connectDB;
-
-
-// THIS IS A TEST ! THIS IS A YO! THIS A TEST B !
