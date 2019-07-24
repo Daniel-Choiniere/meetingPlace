@@ -1,3 +1,4 @@
 {
-    "mongoURI": "mongodb+srv://dchoiniere:careerdev@careerdevs-q9u4d.mongodb.net/test?retryWrites=true&w=majority"
+    "mongoURI": "mongodb+srv://dchoiniere:careerdev@careerdevs-q9u4d.mongodb.net/test?retryWrites=true&w=majority",
+    "jwtSecret": "mysecrettoken"
 }
