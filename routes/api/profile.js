@@ -76,9 +76,17 @@ router.post('/', [auth,
         if (linkedin) profileFields.social.linkedin = linkedin;
         if (instagram) profileFields.social.instagram = instagram;
 
-        console.log(profileFields.social.twitter);
+        try {
+            let profile = Profile.findOne({ user: req.user.id });
 
-        res.send('Hello');
+            if (profile) {
+                // update
+                
+            }
+        } catch(err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
     }
 );
 
