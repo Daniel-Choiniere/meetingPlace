@@ -293,14 +293,14 @@ router.put('/education',
 router.delete('/education/:edu_id', auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user.id });
-    const eduIds = foundProfile.education.map(exp => edu._id.toString());
+    const eduIds = profile.education.map(edu => edu._id.toString());
     // if i dont add .toString() it returns this weird mongoose coreArray and the ids are somehow objects and it still deletes anyway even if you put /experience/5
     const removeIndex = eduIds.indexOf(req.params.edu_id);
     if (removeIndex === -1) {
       return res.status(500).json({ msg: "Server error" });
     } else {
   
-      foundProfile.education.splice(removeIndex, 1);
+      profile.education.splice(removeIndex, 1);
       await profile.save();
       return res.status(200).json(profile);
     }
