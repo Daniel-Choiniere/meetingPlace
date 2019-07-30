@@ -212,11 +212,7 @@ router.delete('/experience/:exp_id', auth, async (req, res) => {
     if (removeIndex === -1) {
       return res.status(500).json({ msg: "Server error" });
     } else {
-      // theses console logs helped me figure it out
-      console.log("expIds", expIds);
-      console.log("typeof expIds", typeof expIds);
-      console.log("req.params", req.params);
-      console.log("removed", expIds.indexOf(req.params.exp_id));
+  
       foundProfile.experience.splice(removeIndex, 1);
       await foundProfile.save();
       return res.status(200).json(foundProfile);
@@ -240,7 +236,7 @@ router.put('/education',
   check('degree', 'Degree is required')
       .not()
       .isEmpty(),
-  check('fieldofstufy', 'Field of study is required')
+  check('fieldofstudy', 'Field of study is required')
       .not()
       .isEmpty(),
   check('from', 'From date is required')
@@ -295,28 +291,23 @@ router.put('/education',
 // description   Delete education from profile 
 // @access       Private
 router.delete('/education/:edu_id', auth, async (req, res) => {
-try {
-  const foundProfile = await Profile.findOne({ user: req.user.id });
-  const expIds = foundProfile.education.map(exp => exp._id.toString());
-
-  const removeIndex = expIds.indexOf(req.params.exp_id);
-  if (removeIndex === -1) {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+    const eduIds = foundProfile.education.map(exp => edu._id.toString());
+    // if i dont add .toString() it returns this weird mongoose coreArray and the ids are somehow objects and it still deletes anyway even if you put /experience/5
+    const removeIndex = eduIds.indexOf(req.params.edu_id);
+    if (removeIndex === -1) {
+      return res.status(500).json({ msg: "Server error" });
+    } else {
+  
+      foundProfile.education.splice(removeIndex, 1);
+      await profile.save();
+      return res.status(200).json(profile);
+    }
+  } catch (error) {
+    console.error(error);
     return res.status(500).json({ msg: "Server error" });
-  } else {
-    // theses console logs helped me figure it out
-    console.log("expIds", expIds);
-    console.log("typeof expIds", typeof expIds);
-    console.log("req.params", req.params);
-    console.log("removed", expIds.indexOf(req.params.exp_id));
-    foundProfile.experience.splice(removeIndex, 1);
-    await foundProfile.save();
-    return res.status(200).json(foundProfile);
   }
-} catch (error) {
-  console.error(error);
-  return res.status(500).json({ msg: "Server error" });
-}
 });
-
 
 module.exports = router;
