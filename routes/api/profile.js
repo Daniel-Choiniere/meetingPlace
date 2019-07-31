@@ -1,5 +1,6 @@
 const express = require("express");
-const request= require('request');
+const request = require('request');
+const config = require('config');
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
@@ -208,16 +209,11 @@ router.delete('/experience/:exp_id', auth, async (req, res) => {
   try {
     const foundProfile = await Profile.findOne({ user: req.user.id });
     const expIds = foundProfile.experience.map(exp => exp._id.toString());
-    // if i dont add .toString() it returns this weird mongoose coreArray and the ids are somehow objects and it still deletes anyway even if you put /experience/5
     const removeIndex = expIds.indexOf(req.params.exp_id);
     if (removeIndex === -1) {
       return res.status(500).json({ msg: "Server error" });
     } else {
-      // theses console logs helped me figure it out
-      console.log("expIds", expIds);
-      console.log("typeof expIds", typeof expIds);
-      console.log("req.params", req.params);
-      console.log("removed", expIds.indexOf(req.params.exp_id));
+  
       foundProfile.experience.splice(removeIndex, 1);
       await foundProfile.save();
       return res.status(200).json(foundProfile);
@@ -241,7 +237,7 @@ router.put('/education',
   check('degree', 'Degree is required')
       .not()
       .isEmpty(),
-  check('fieldofstufy', 'Field of study is required')
+  check('fieldofstudy', 'Field of study is required')
       .not()
       .isEmpty(),
   check('from', 'From date is required')
@@ -296,43 +292,57 @@ router.put('/education',
 // description   Delete education from profile 
 // @access       Private
 router.delete('/education/:edu_id', auth, async (req, res) => {
-try {
-  const foundProfile = await Profile.findOne({ user: req.user.id });
-  const expIds = foundProfile.education.map(exp => exp._id.toString());
-
-  const removeIndex = expIds.indexOf(req.params.exp_id);
-  if (removeIndex === -1) {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+    const eduIds = profile.education.map(edu => edu._id.toString());
+    const removeIndex = eduIds.indexOf(req.params.edu_id);
+    if (removeIndex === -1) {
+      return res.status(500).json({ msg: "Server error" });
+    } else {
+  
+      profile.education.splice(removeIndex, 1);
+      await profile.save();
+      return res.status(200).json(profile);
+    }
+  } catch (error) {
+    console.error(error);
     return res.status(500).json({ msg: "Server error" });
-  } else {
-    // theses console logs helped me figure it out
-    console.log("expIds", expIds);
-    console.log("typeof expIds", typeof expIds);
-    console.log("req.params", req.params);
-    console.log("removed", expIds.indexOf(req.params.exp_id));
-    foundProfile.experience.splice(removeIndex, 1);
-    await foundProfile.save();
-    return res.status(200).json(foundProfile);
   }
-} catch (error) {
-  console.error(error);
-  return res.status(500).json({ msg: "Server error" });
-}
 });
 
-// @route        GET api/profile/github/:username
-// description   GEt user repos from Github
+// @route        Get api/profile/github/:username
+// description   Get user repos from Github
 // @access       Public
 router.get('/github/:username', (req, res) => {
   try {
-    const options = {
-      uri: `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc&client_id=${config.get('githubClientId')}&client_secret=${config,get('githubSecret')}`,
-      method: 'GET',
-      headers: { 'user-agent': 'node.js' }
-    }
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
+      const options = {
+        uri: `https://api.github.com/users/${
+          req.params.username
+        }/repos?per_page=5&sort=created:asc&client_id=${config.get(
+          'githubClientId'
+        )}&client_secret=${config.get('githubSecret')}`,
+        method: 'GET',
+        headers: { 'user-agent': 'node.js' }
+      };
+
+      request(options, (error, response, body) => {
+        if (error) {
+          console.error(error);
+        } 
+
+        if (response.statusCode !== 200) {
+          return res.status(404).json({ msg: "No github profile found " });
+        } 
+        
+      res.json(JSON.parse(body));
+      });
+    
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ msg: "Server error" })
   }
-});
+})
+
 
 module.exports = router;
+
