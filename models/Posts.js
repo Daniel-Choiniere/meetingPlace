@@ -33,7 +33,23 @@ const PostSchema = new Schema({
             text: {
                 type: String,
                 required: true
+            },
+            name: {
+                type: String
+            },
+            avatar: {
+                type: string
+            },
+            date: {
+                type: Date,
+                default: Date.now
             }
         }
-    ]
+    ],
+    date: {
+        type: Date,
+        default: Date.now
+    }
 });
+
+module.exports = Post = mogoose.model('post', PostSchema);
