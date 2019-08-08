@@ -199,9 +199,31 @@ async (req, res) => {
 // @route        DELETE api/posts/comment/:id/:commnet_id
 // description   Delete a comment
 // @access       Private
-router.delete('api/posts/comment/:id/:commnet_id', auth, async (req, res) => {
+router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
     try{
+        const post = await Post.findById(req.params.id);
 
+        // pull out the comment
+        const comment = post.comments.find(comment=> comment.id === req.params.comment_id);
+
+        // Make sure commnet exists
+        if(!comment) {
+            return res.status(404).json({ msg: "Comment does not exist yet" });
+        }
+
+        // check user
+        if(comment.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: "User not authorized" });
+        }
+
+        // find the remove index
+        const removeIndex = post.comments.map(comment => comment.user.toString()).indexOf(req.user.id);
+
+        post.comments.splice(removeIndex, 1);
+
+        await post.save();
+
+        res.json(post.comments);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
