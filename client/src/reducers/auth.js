@@ -1,7 +1,7 @@
 import { REGISTER_SUCCESS, REGISTER_FAIL } from "../actions/types";
-import { types } from "util";
+// import { types } from "util";
 
-const intialState = {
+const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
   loading: true,
