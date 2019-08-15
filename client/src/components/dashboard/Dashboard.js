@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 const Dashboard = props => {
   return <div>Dashboard</div>;
@@ -7,4 +8,7 @@ const Dashboard = props => {
 
 Dashboard.propTypes = {};
 
-export default Dashboard;
+export default connect(
+  mapStateToProps,
+  { getCurrentProfile }
+)(Dashboard);
