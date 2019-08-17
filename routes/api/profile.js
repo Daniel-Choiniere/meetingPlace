@@ -40,7 +40,6 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req);
-    // console.log("Made it here");
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
