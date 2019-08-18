@@ -1,14 +1,14 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProfile, getCurrentProfile } from "../../actions/profile";
 
 // types of state
-const CreateProfile = ({
+const EditProfile = ({
+  profile: { profile, loading },
   createProfile,
-  getCurrentProfile,
-  // profile: { profile, loading },
+  //   getCurrentProfile,
   history
 }) => {
   const [formData, setFormData] = useState({
@@ -26,6 +26,27 @@ const CreateProfile = ({
     instagram: ""
   });
   const [displaySocialInputs, toggleSocailInputs] = useState(false);
+
+  useEffect(() => {
+    // getCurrentProfile();
+    setFormData({
+      // if its loading or there is no profile company than have a blank field. If there is a profile company than fill the field
+      company: loading || !profile.company ? "" : profile.company,
+      website: loading || !profile.website ? "" : profile.website,
+      location: loading || !profile.location ? "" : profile.location,
+      status: loading || !profile.status ? "" : profile.status,
+      skills: loading || !profile.skills ? "" : profile.skills.join(","),
+      githubusername:
+        loading || !profile.githubusername ? "" : profile.githubusername,
+      bio: loading || !profile.bio ? "" : profile.bio,
+      twitter: loading || !profile.social ? "" : profile.social.twitter,
+      facebook: loading || !profile.social ? "" : profile.social.facebook,
+      linkedin: loading || !profile.social ? "" : profile.social.linkedin,
+      youtube: loading || !profile.social ? "" : profile.social.youtube,
+      instagram: loading || !profile.social ? "" : profile.social.instagram
+    });
+  }, [loading]);
+
   const {
     company,
     website,
@@ -49,11 +70,6 @@ const CreateProfile = ({
     e.preventDefault();
     createProfile(formData, history);
   };
-
-  useEffect(() => {
-    getCurrentProfile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getCurrentProfile]);
 
   return (
     <Fragment>
@@ -230,11 +246,17 @@ const CreateProfile = ({
   );
 };
 
-CreateProfile.propTypes = {
-  createProfile: PropTypes.func.isRequired
+EditProfile.propTypes = {
+  createProfile: PropTypes.func.isRequired,
+  //   getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
+const mapStateToProps = state => ({
+  profile: state.profile
+});
+
 export default connect(
-  null,
-  { createProfile, getCurrentProfile }
-)(withRouter(CreateProfile));
+  mapStateToProps,
+  { createProfile }
+)(withRouter(EditProfile));
