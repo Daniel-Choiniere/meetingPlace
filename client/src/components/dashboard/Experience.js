@@ -12,7 +12,7 @@ const Experience = ({ experience }) => {
       <td>
         <Moment format="YYYY/MM/DD">{moment.utc(exp.from)}</Moment> -{" "}
         {exp.to === null ? (
-          " Now"
+          " Current"
         ) : (
           <Moment format="YYYY/MM/DD">{moment.utc(exp.to)}</Moment>
         )}
