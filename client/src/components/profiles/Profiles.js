@@ -9,7 +9,21 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
     getProfiles();
   }, []);
 
-  return <div />;
+  return <Fragment>
+      { loading ? <spinner /> : <Fragment> 
+          {<h1 className="large text-primary">Developers</h1>
+          <p className="lead">
+              <i className="fab fa-connectdevelop"></i> Browse and connect with developers
+          </p>
+          <div className="profiles">
+              { profiles.length > 0 ? (
+                  profiles.map(profile => (
+                      <profileItem key={profile._id} profile={profile} />>
+                  ))
+              ) : <h4>No profiles found...</h4> }
+          </div>
+        </Fragment> }
+  </Fragment>
 };
 
 Profiles.propTypes = {
