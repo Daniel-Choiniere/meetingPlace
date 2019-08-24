@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { createProfile } from "../../actions/profile";
+import { createProfile, getCurrentProfile } from "../../actions/profile";
 
 // types of state
 const EditProfile = ({
@@ -46,7 +46,7 @@ const EditProfile = ({
       instagram: loading || !profile.social ? "" : profile.social.instagram
     });
     // eslint-disable-next-line
-  }, [loading]);
+  }, [loading, getCurrentProfile]);
 
   const {
     company,
