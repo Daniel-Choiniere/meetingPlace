@@ -3,22 +3,16 @@ import PropTypes from "prop-types";
 
 const ProfileAbout = ({
   profile: {
-    profile: {
-      bio,
-      skills,
-      user: { name }
-    }
+    bio,
+    skills,
+    user: { name }
   }
 }) => (
   <div class="profile-about bg-light p-2">
     {bio && (
       <Fragment>
         <h2 class="text-primary">{name.trim().split(" ")[0]}s Bio</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed
-          doloremque nesciunt, repellendus nostrum deleniti recusandae nobis
-          neque modi perspiciatis similique?
-        </p>
+        <p>{bio}</p>
         <div class="line" />
       </Fragment>
     )}
@@ -27,7 +21,7 @@ const ProfileAbout = ({
     <div class="skills">
       {skills.map((skill, index) => (
         <div key={index} className="p-1">
-          <i className="fas fa-check" /> [skill}
+          <i className="fas fa-check" /> {skill}
         </div>
       ))}
     </div>
