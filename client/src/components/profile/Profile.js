@@ -55,17 +55,17 @@ const Profile = ({
             </div>
             <div className="profile-edu bg-white p-2">
               <h2 className="text-primary">Education</h2>
-              {profile.experience.length > 0 ? (
+              {profile.education.length > 0 ? (
                 <Fragment>
-                  {profile.experience.map(experience => (
-                    <ProfileExperience
-                      key={experience._id}
-                      experience={experience}
+                  {profile.education.map(education => (
+                    <ProfileEducation
+                      key={education._id}
+                      education={education}
                     />
                   ))}
                 </Fragment>
               ) : (
-                <h4>No Experience Credentials</h4>
+                <h4>No Education Credentials</h4>
               )}
             </div>
           </div>
