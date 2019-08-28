@@ -1,4 +1,9 @@
-import { GET_POSTS, POST_ERROR, UPDATE_LIKES } from "../actions/types";
+import {
+  GET_POSTS,
+  POST_ERROR,
+  UPDATE_LIKES,
+  DELETE_POST
+} from "../actions/types";
 
 const intialState = {
   posts: [],
@@ -15,6 +20,13 @@ export default function(state = intialState, action) {
       return {
         ...state,
         posts: payload,
+        loading: false
+      };
+    case DELETE_POST:
+      return {
+        ...state,
+        //   filter through the posts and return all posts except the payload (which is an id of the post that was deleted)
+        posts: state.posts.filter(post => post._id !== payload),
         loading: false
       };
     case POST_ERROR:
