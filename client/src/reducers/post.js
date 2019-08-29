@@ -26,7 +26,7 @@ export default function(state = intialState, action) {
       return {
         ...state,
         //   filter through the posts and return all posts except the payload (which is an id of the post that was deleted)
-        posts: state.posts.filter(post => post._id !== payload),
+        posts: state.posts.filter(post => post._id !== payload.id),
         loading: false
       };
     case POST_ERROR:
