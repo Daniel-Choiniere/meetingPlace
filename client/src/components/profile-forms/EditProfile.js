@@ -63,7 +63,7 @@ const EditProfile = ({
     instagram
   } = formData;
 
-  //   Whatever is the value of the text field is oput into that part of the form data
+  //   Whatever is the value of the text field is output into that part of the form data
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 

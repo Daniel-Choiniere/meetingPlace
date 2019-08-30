@@ -1,0 +1,6 @@
+{
+    "mongoURI": "mongodb+srv://dchoiniere:careerdev@careerdevs-q9u4d.mongodb.net/test?retryWrites=true&w=majority",
+    "jwtSecret": "mysecrettoken",
+    "githubClientId": "616d5e04a24ef1c93510",
+    "githubSecret": "4c30ded4941b7796478e4b10ef0fdc7587583635"
+}
