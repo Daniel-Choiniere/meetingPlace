@@ -8,12 +8,13 @@ const Profileitem = ({
     status,
     company,
     location,
-    skills
+    skills, 
+    githubusername
   }
 }) => {
   return (
     <div className="profile bg-light">
-      <img src={avatar} alt="" className="round-img" />
+      <img src={`https://github.com/${githubusername}.png`} alt="" className="round-img" />
       <div>
         <h2>{name}</h2>
         <p>

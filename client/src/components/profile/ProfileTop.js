@@ -8,6 +8,7 @@ const ProfileTop = ({
     location,
     website,
     social,
+    githubusername,
     user: { name, avatar }
   }
 }) => {
@@ -17,7 +18,7 @@ const ProfileTop = ({
         className="round-img my-1"
         // replace next line with src={avatar} alt=''/>
         src={
-          {avatar}
+          `https://github.com/${githubusername}.png`
         }
         alt=""
       />
