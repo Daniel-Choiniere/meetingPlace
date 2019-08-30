@@ -2,6 +2,7 @@ import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Zoom from 'react-reveal/Zoom';
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
@@ -12,7 +13,10 @@ const Landing = ({ isAuthenticated }) => {
     <section className="landing">
       <div className="dark-overlay">
         <div className="landing-inner">
-          <h1 className="x-large">Code Social</h1>
+        
+          <Zoom>
+            <h1 className="x-large">Code Social</h1>
+          </Zoom>
           <p className="lead">
             Create a developer profile/portfolio, share posts and get help from
             other developers
