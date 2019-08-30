@@ -9,7 +9,7 @@ const ProfileTop = ({
     website,
     social,
     githubusername,
-    user: { name, avatar }
+    user: { name }
   }
 }) => {
   return (
