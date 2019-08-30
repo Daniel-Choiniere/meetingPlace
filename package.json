@@ -1,6 +1,7 @@
 {
   "name": "devconnector",
   "version": "1.0.0",
+  "engines": { "node": "10.15.2" },
   "description": "Social Network",
   "main": "server.js",
   "scripts": {
